@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PKI Mastery Roadmap (12-Week Study Guide)</title>
+</head>
+<body>
+
+<h1>PKI Mastery Roadmap (12-Week Study Guide)</h1>
+
+<p>
+A weekly study guide for enterprise PKI work with Venafi + Axiad + DigiCert, plus enrollment proxies and CRL infrastructure.
+Designed for steady progress toward full independence.
+</p>
+
+<hr />
+
+<h2>How to use this</h2>
+<ul>
+  <li>Plan for ~6 focused hours per week (scale up/down as needed).</li>
+  <li>Each week has: learn → hands-on → milestone.</li>
+  <li>If your work week is chaotic, do the hands-on portion first.</li>
+</ul>
+
+<hr />
+
+<h2>Week 1 — PKI fundamentals, trust chains, certificate anatomy</h2>
+<p><strong>Learn</strong></p>
+<ul>
+  <li>Certificate fields: Subject, Issuer, SAN, Key Usage, EKU, validity, serial.</li>
+  <li>Trust chains: root → intermediate → leaf.</li>
+  <li>What “validation” means: chain building + time validity + revocation checks.</li>
+</ul>
+<p><strong>Hands-on</strong></p>
+<ul>
+  <li>Inspect certs on Windows using <code>certutil</code> and the Certificates MMC.</li>
+  <li>Build a small lab PKI (root + issuing CA) and issue a test cert.</li>
+</ul>
+<p><strong>Milestone</strong></p>
+<ul>
+  <li>You can explain why a cert is valid/invalid without vendor tooling.</li>
+  <li>You can trace a chain from leaf → root and describe each link.</li>
+</ul>
+
+<hr />
+
+<h2>Week 2 — Enrollment and templates</h2>
+<p><strong>Learn</strong></p>
+<ul>
+  <li>Enrollment concepts: CSR, proof-of-possession, identity binding.</li>
+  <li>Enrollment protocols: SCEP, EST, ACME (what they do and when used).</li>
+  <li>Template/policy concepts: EKU, key size/type, SAN rules, validity.</li>
+</ul>
+<p><strong>Hands-on</strong></p>
+<ul>
+  <li>Issue a certificate via a defined policy/template in a lab.</li>
+  <li>Break enrollment (permissions/EKU/SAN mismatch) and fix it.</li>
+</ul>
+<p><strong>Milestone</strong></p>
+<ul>
+  <li>You can describe enrollment end-to-end and pinpoint where failures occur.</li>
+</ul>
+
+<hr />
+
+<h2>Week 3 — Auto-enrollment proxies and enrollment flow troubleshooting</h2>
+<p><strong>Learn</strong></p>
+<ul>
+  <li>What an enrollment proxy does in your environment (control point, routing, auth, policy enforcement).</li>
+  <li>Common failure buckets: auth, routing/DNS, policy mismatch, key generation, connectivity, trust.</li>
+  <li>Where evidence lives: system logs, proxy logs, client logs, network traces.</li>
+</ul>
+<p><strong>Hands-on</strong></p>
+<ul>
+  <li>Map the flow: client → proxy → issuing endpoint → response → installation.</li>
+  <li>Capture a request/response with a network trace and identify the failure step.</li>
+</ul>
+<p><strong>Milestone</strong></p>
+<ul>
+  <li>You can troubleshoot enrollment by step (not by guesswork).</li>
+</ul>
+
+<hr />
+
+<h2>Week 4 — CRL distribution, OCSP, revocation architecture</h2>
+<p><strong>Learn</strong></p>
+<ul>
+  <li>CRL basics: thisUpdate/nextUpdate, full vs delta CRLs, signing.</li>
+  <li>CDP/AIA concepts and why clients care.</li>
+  <li>OCSP basics and when it matters.</li>
+  <li>Client behavior: caching, timeouts, “soft-fail” vs “hard-fail” scenarios.</li>
+</ul>
+<p><strong>Hands-on</strong></p>
+<ul>
+  <li>Host a CRL on a web server in a lab and validate download + parsing.</li>
+  <li>Simulate CRL failure (404/timeout/expired CRL) and observe validation impact.</li>
+</ul>
+<p><strong>Milestone</strong></p>
+<ul>
+  <li>You can explain exactly what happens when CRLs break and how to verify recovery.</li>
+</ul>
+
+<hr />
+
+<h2>Week 5 — Venafi fundamentals: policy folders, inheritance, permissions</h2>
+<p><strong>Learn</strong></p>
+<ul>
+  <li>Folder hierarchy and policy inheritance model.</li>
+  <li>Permissioning model (groups, roles, inheritance boundaries).</li>
+  <li>How policy maps to certificate requirements (naming, key type, SAN rules, etc.).</li>
+</ul>
+<p><strong>Hands-on</strong></p>
+<ul>
+  <li>Create a policy folder, apply policy, assign group permissions, validate inheritance.</li>
+  <li>Document the exact steps your microservice automates (inputs → actions → outputs).</li>
+</ul>
+<p><strong>Milestone</strong></p>
+<ul>
+  <li>You can reason about “why this policy folder behaves like this” without tribal knowledge.</li>
+</ul>
+
+<hr />
+
+<h2>Week 6 — Venafi automation and API proficiency</h2>
+<p><strong>Learn</strong></p>
+<ul>
+  <li>Venafi API basics: auth, common endpoints, error handling patterns.</li>
+  <li>Operational tasks you should automate: folder creation, permissions, metadata, reporting.</li>
+</ul>
+<p><strong>Hands-on</strong></p>
+<ul>
+  <li>Write a script (PowerShell or Python) to create a policy folder + apply permissions.</li>
+  <li>Add a “dry run” mode and structured logging.</li>
+</ul>
+<p><strong>Milestone</strong></p>
+<ul>
+  <li>You can reproduce key Venafi operations via API (repeatably, safely).</li>
+</ul>
+
+<hr />
+
+<h2>Week 7 — Axiad: identity, credentials, lifecycle</h2>
+<p><strong>Learn</strong></p>
+<ul>
+  <li>How identity is established and bound to a certificate.</li>
+  <li>Credential lifecycle: issue, renew/rotate, revoke, recover.</li>
+  <li>Common failure modes: identity proofing gaps, device binding issues, policy mismatches.</li>
+</ul>
+<p><strong>Hands-on</strong></p>
+<ul>
+  <li>Run a full lifecycle in a test context (issue → validate auth use → revoke → re-issue).</li>
+</ul>
+<p><strong>Milestone</strong></p>
+<ul>
+  <li>You can troubleshoot Axiad issues by mapping symptoms to lifecycle steps.</li>
+</ul>
+
+<hr />
+
+<h2>Week 8 — DigiCert: external issuance, automation, validation</h2>
+<p><strong>Learn</strong></p>
+<ul>
+  <li>Certificate types and validation methods (DNS/HTTP, org validation where applicable).</li>
+  <li>Automation options (API/ACME-like approaches if used).</li>
+  <li>Operational realities: renewals, rekeys, naming standards, SAN management.</li>
+</ul>
+<p><strong>Hands-on</strong></p>
+<ul>
+  <li>Trace an issuance flow end-to-end (request → validation → issuance → deployment → renewal).</li>
+</ul>
+<p><strong>Milestone</strong></p>
+<ul>
+  <li>You can explain how external issuance differs from internal issuance and why.</li>
+</ul>
+
+<hr />
+
+<h2>Week 9 — PKI architecture and design principles</h2>
+<p><strong>Learn</strong></p>
+<ul>
+  <li>Trust model design: why hierarchies exist and how blast radius is controlled.</li>
+  <li>Key protection (HSM concepts, separation of duties, auditability).</li>
+  <li>Policy documents (CP/CPS ideas), change control, incident response basics.</li>
+</ul>
+<p><strong>Hands-on</strong></p>
+<ul>
+  <li>Draw your current “as-is” architecture (even if rough) and annotate trust boundaries.</li>
+  <li>Identify top risks (single points of failure, revocation dependencies, enrollment choke points).</li>
+</ul>
+<p><strong>Milestone</strong></p>
+<ul>
+  <li>You can discuss PKI like an architect (tradeoffs, risks, controls), not just an operator.</li>
+</ul>
+
+<hr />
+
+<h2>Week 10 — TLS and certificate validation in depth</h2>
+<p><strong>Learn</strong></p>
+<ul>
+  <li>Handshake fundamentals, chain presentation, server auth vs client auth (mTLS).</li>
+  <li>Why mismatched SAN/EKU breaks TLS.</li>
+  <li>How clients build chains and use AIA/CDP/OCSP during validation.</li>
+</ul>
+<p><strong>Hands-on</strong></p>
+<ul>
+  <li>Capture TLS with Wireshark, identify the certificate chain and failure reason.</li>
+  <li>Reproduce a TLS failure intentionally and fix it (wrong SAN, missing intermediate, etc.).</li>
+</ul>
+<p><strong>Milestone</strong></p>
+<ul>
+  <li>You can debug “TLS errors” quickly and explain them clearly to others.</li>
+</ul>
+
+<hr />
+
+<h2>Week 11 — Troubleshooting mastery (break/fix lab)</h2>
+<p><strong>Learn</strong></p>
+<ul>
+  <li>Common PKI failure patterns: trust chain, name constraints, EKU, revocation, enrollment auth.</li>
+  <li>Evidence-driven troubleshooting: what to check first, what to ignore, what proves the cause.</li>
+</ul>
+<p><strong>Hands-on</strong></p>
+<ul>
+  <li>Create a “failure lab” and break one thing at a time: SAN, EKU, missing intermediate, CRL URL, expired CRL.</li>
+  <li>Write a one-page runbook for each failure: symptoms → checks → fix → verification.</li>
+</ul>
+<p><strong>Milestone</strong></p>
+<ul>
+  <li>You can consistently get from symptom → root cause with a repeatable method.</li>
+</ul>
+
+<hr />
+
+<h2>Week 12 — Automation, CI/CD, and scaling PKI operations</h2>
+<p><strong>Learn</strong></p>
+<ul>
+  <li>How to turn operational knowledge into scripts/runbooks/pipelines.</li>
+  <li>Safe automation patterns: least privilege, idempotency, dry-run, logging, rollback.</li>
+  <li>Certificate rotation strategy for services (inventory → renew → deploy → verify → retire old).</li>
+</ul>
+<p><strong>Hands-on</strong></p>
+<ul>
+  <li>Build a small pipeline step that validates policy folder config or certificate readiness.</li>
+  <li>Write an “expiration audit” script for a test scope and produce a simple report.</li>
+</ul>
+<p><strong>Milestone</strong></p>
+<ul>
+  <li>You can replace tribal knowledge with repeatable automation and documentation.</li>
+</ul>
+
+<hr />
+
+<h2>After week 12</h2>
+<ul>
+  <li>Pick one deep specialty to sharpen (revocation infrastructure, enrollment automation, TLS debugging, platform integrations).</li>
+  <li>Keep a personal PKI runbook: every incident becomes a reusable checklist.</li>
+  <li>Focus on turning “mystery systems” into diagrams, tests, scripts, and verification steps.</li>
+</ul>
+
+<blockquote>
+  <p>
+  The goal is not to memorize trivia. The goal is to understand flows end-to-end, collect evidence, and build repeatable systems.
+  That removes the power of gatekeeping.
+  </p>
+</blockquote>
+
+</body>
+</html>
